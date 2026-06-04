@@ -1,0 +1,163 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: users
+    // Document ID: userId (UID)
+    // Fields:
+    //   - uid: string (required)
+    //   - email: string (required, email format)
+    //   - displayName: string (optional)
+    //   - region: string (optional, enum: local, saudi, global)
+    //   - createdAt: timestamp (required)
+    //
+    // Collection: fastingLogs
+    // Document ID: auto-generated or composite
+    // Fields:
+    //   - uid: string (required)
+    //   - date: string (required, ISO date)
+    //   - status: string (required, enum: completed, missed, planned)
+    //   - type: string (optional)
+    //   - hijriDate: string (optional)
+    //
+    // ===============================================================
+
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+    
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    function isDocOwner() {
+      return isAuthenticated() && request.auth.uid == resource.data.uid;
+    }
+    
+    function requestMatchesUid() {
+      return isAuthenticated() && request.auth.uid == request.resource.data.uid;
+    }
+    
+    function isValidEmail(email) {
+      return email is string && email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+    }
+
+    function isAdmin() {
+      return isAuthenticated() &&
+        (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin' ||
+          (request.auth.token.email == "hammedobrien@gmail.com" && request.auth.token.email_verified == true));
+    }
+
+    // ===============================================================
+    // Domain Validators
+    // ===============================================================
+
+    function isValidUser(data) {
+      return data.keys().hasAll(['uid', 'email']) &&
+             data.uid == request.auth.uid &&
+             isValidEmail(data.email) &&
+             (!('region' in data) || data.region in ['local', 'saudi', 'global']);
+    }
+
+    function isValidDateString(dateStr) {
+      return dateStr is string &&
+        dateStr.matches("^\\d{4}-\\d{2}-\\d{2}$");
+    }
+
+    function isValidFastingLog(data) {
+      return data.keys().hasAll(['uid', 'date', 'status']) &&
+             data.uid == request.auth.uid &&
+             data.status in ['completed', 'missed', 'planned'] &&
+             isValidDateString(data.date) &&
+             (!('type' in data) || (data.type is string && data.type.size() < 100)) &&
+             (!('hijriDate' in data) || (data.hijriDate is string && data.hijriDate.size() < 100));
+    }
+
+    function isValidMemorizationLog(data) {
+      return data.keys().hasAll(['uid', 'date', 'memorized', 'revision', 'hizb', 'juz']) &&
+             data.uid == request.auth.uid &&
+             isValidDateString(data.date) &&
+             data.memorized is bool &&
+             data.revision is bool &&
+             data.hizb is bool &&
+             data.juz is bool;
+    }
+
+    function isValidZakatCalculation(data) {
+      return data.keys().hasAll(['uid', 'date', 'cash', 'totalWealth', 'nisabThreshold', 'isDue', 'zakatOwed', 'currency']) &&
+             data.uid == request.auth.uid &&
+             isValidDateString(data.date) &&
+             (data.cash is number || data.cash is int) &&
+             (data.totalWealth is number || data.totalWealth is int) &&
+             (data.nisabThreshold is number || data.nisabThreshold is int) &&
+             data.isDue is bool &&
+             (data.zakatOwed is number || data.zakatOwed is int) &&
+             data.currency is string;
+    }
+
+    function isValidSavingsLog(data) {
+      return data.keys().hasAll(['uid', 'date', 'amount', 'category', 'type']) &&
+             data.uid == request.auth.uid &&
+             isValidDateString(data.date) &&
+             (data.amount is number || data.amount is int) &&
+             data.category in ['zakat', 'hajj'] &&
+             data.type in ['fixed', 'flexible'] &&
+             (!('notes' in data) || data.notes is string);
+    }
+
+    // ===============================================================
+    // Rules
+    // ===============================================================
+
+    match /users/{userId} {
+      allow read: if isOwner(userId) || isAdmin();
+      allow create: if isOwner(userId) && isValidUser(request.resource.data);
+      allow update: if isOwner(userId) && isValidUser(request.resource.data) && 
+                    request.resource.data.uid == resource.data.uid;
+    }
+
+    match /fastingLogs/{logId} {
+      allow read: if isDocOwner() || isAdmin();
+      allow create: if requestMatchesUid() && isValidFastingLog(request.resource.data);
+      allow update: if isDocOwner() && isValidFastingLog(request.resource.data) &&
+                    request.resource.data.uid == resource.data.uid;
+      allow delete: if isDocOwner();
+    }
+
+    match /memorizationLogs/{logId} {
+      allow read: if isDocOwner() || isAdmin();
+      allow create: if requestMatchesUid() && isValidMemorizationLog(request.resource.data);
+      allow update: if isDocOwner() && isValidMemorizationLog(request.resource.data) &&
+                    request.resource.data.uid == resource.data.uid;
+      allow delete: if isDocOwner();
+    }
+
+    match /zakatCalculations/{calcId} {
+      allow read: if isDocOwner() || isAdmin();
+      allow create: if requestMatchesUid() && isValidZakatCalculation(request.resource.data);
+      allow update: if isDocOwner() && isValidZakatCalculation(request.resource.data) &&
+                    request.resource.data.uid == resource.data.uid;
+      allow delete: if isDocOwner();
+    }
+
+    match /savingsLogs/{logId} {
+      allow read: if isDocOwner() || isAdmin();
+      allow create: if requestMatchesUid() && isValidSavingsLog(request.resource.data);
+      allow update: if isDocOwner() && isValidSavingsLog(request.resource.data) &&
+                    request.resource.data.uid == resource.data.uid;
+      allow delete: if isDocOwner();
+    }
+
+    match /test/{docId} {
+      allow read: if true;
+    }
+  }
+}

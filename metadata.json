@@ -1,0 +1,10 @@
+{
+  "name": "Remix: Top Muslim",
+  "description": "Real-time Hijri calendar with auto-calculated fasting schedules, moon sighting updates, and an intelligent Iman spiritual planner.",
+  "requestFramePermissions": [
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

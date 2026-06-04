@@ -1,0 +1,102 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "User preferences and basic info",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "region": { "type": "string", "enum": ["local", "saudi", "global"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email"]
+    },
+    "FastingLog": {
+      "title": "Fasting Log",
+      "description": "User's fasting record for a specific date",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "date": { "type": "string", "format": "date" },
+        "status": { "type": "string", "enum": ["completed", "missed", "planned"] },
+        "type": { "type": "string" },
+        "hijriDate": { "type": "string" }
+      },
+      "required": ["uid", "date", "status"]
+    },
+    "MemorizationLog": {
+      "title": "Memorization Log",
+      "description": "Daily memorization tasks completion status",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "date": { "type": "string", "format": "date" },
+        "memorized": { "type": "boolean" },
+        "revision": { "type": "boolean" },
+        "hizb": { "type": "boolean" },
+        "juz": { "type": "boolean" }
+      },
+      "required": ["uid", "date", "memorized", "revision", "hizb", "juz"]
+    },
+    "ZakatCalculation": {
+      "title": "Zakat Calculation",
+      "description": "Saved Zakat calculation inputs and outcomes",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "date": { "type": "string", "format": "date" },
+        "cash": { "type": "number" },
+        "goldGrams": { "type": "number" },
+        "silverGrams": { "type": "number" },
+        "goldPrice": { "type": "number" },
+        "silverPrice": { "type": "number" },
+        "investments": { "type": "number" },
+        "liabilities": { "type": "number" },
+        "totalWealth": { "type": "number" },
+        "nisabThreshold": { "type": "number" },
+        "isDue": { "type": "boolean" },
+        "zakatOwed": { "type": "number" },
+        "currency": { "type": "string" }
+      },
+      "required": ["uid", "date", "cash", "totalWealth", "nisabThreshold", "isDue", "zakatOwed", "currency"]
+    },
+    "SavingsLog": {
+      "title": "Savings Log",
+      "description": "Contribution logs for spiritual savings (Zakat or Hajj)",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "date": { "type": "string", "format": "date" },
+        "amount": { "type": "number" },
+        "category": { "type": "string", "enum": ["zakat", "hajj"] },
+        "type": { "type": "string", "enum": ["fixed", "flexible"] },
+        "notes": { "type": "string" }
+      },
+      "required": ["uid", "date", "amount", "category", "type"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile documents"
+    },
+    "/fastingLogs/{logId}": {
+      "schema": "FastingLog",
+      "description": "Individual fasting logs"
+    },
+    "/memorizationLogs/{logId}": {
+      "schema": "MemorizationLog",
+      "description": "Daily memorization logs"
+    },
+    "/zakatCalculations/{calcId}": {
+      "schema": "ZakatCalculation",
+      "description": "Saved zakat asset calculations"
+    },
+    "/savingsLogs/{logId}": {
+      "schema": "SavingsLog",
+      "description": "Zakat or Hajj savings contributions"
+    }
+  }
+}

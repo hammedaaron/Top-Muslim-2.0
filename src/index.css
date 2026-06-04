@@ -1,0 +1,150 @@
+@import "tailwindcss";
+
+/* -----------------------------------------------------
+ * Safe, High-Contrast Premium Light Mode Overrides
+ * ----------------------------------------------------- */
+
+/* Root theme layout */
+.theme-light,
+.theme-light .min-h-screen,
+.theme-light [class*="bg-[#0a0a0a]"],
+.theme-light [class*="bg-zinc-950"],
+.theme-light [class*="bg-zinc-900"] {
+  background-color: #f4f4f5 !important; /* zinc-100 container bg */
+  color: #18181b !important; /* zinc-900 */
+}
+
+/* Light background converters for primary card segments across the entire app */
+.theme-light .bg-zinc-950,
+.theme-light .bg-zinc-900,
+.theme-light .bg-\[\#0a0a0a\],
+.theme-light .bg-\[\#050505\],
+.theme-light .bg-\[\#0d0d0d\],
+.theme-light .bg-\[\#141414\],
+.theme-light .bg-\[\#1a1a1a\],
+.theme-light .bg-black {
+  background-color: #ffffff !important;
+  color: #18181b !important;
+}
+
+/* Secondary cards, list items, trackers, inside widgets, calendar blocks and cells */
+.theme-light .bg-zinc-900\/50,
+.theme-light .bg-zinc-900\/40,
+.theme-light .bg-[#10b981]\/5,
+.theme-light .bg-black\/50,
+.theme-light .bg-black\/60,
+.theme-light .bg-black\/40,
+.theme-light .bg-black\/30,
+.theme-light .bg-black\/20 {
+  background-color: #f4f4f5 !important; /* zinc-100 offset */
+  color: #18181b !important;
+}
+
+/* Small inline tags, grid cells, calendar non-memorized days, empty trackers */
+.theme-light .bg-zinc-900\/30,
+.theme-light .bg-zinc-900\/25,
+.theme-light .bg-zinc-900\/20,
+.theme-light .bg-zinc-900\/10,
+.theme-light .bg-white\/5,
+.theme-light .bg-white\/10 {
+  background-color: #e4e4e7 !important; /* zinc-200 grid background accent */
+  color: #27272a !important; /* zinc-800 */
+}
+
+/* Border standardizers */
+.theme-light .border-white\/5,
+.theme-light .border-white\/10,
+.theme-light .border-white\/15,
+.theme-light .border-white\/20,
+.theme-light .border-white\/25,
+.theme-light [class*="border-white/"] {
+  border-color: #e4e4e7 !important; /* zinc-200 border */
+}
+
+/* Refined typography adjustments for light contrast */
+.theme-light .text-white,
+.theme-light .text-zinc-100,
+.theme-light .text-zinc-200,
+.theme-light .text-zinc-300 {
+  color: #18181b !important; /* zinc-900 */
+}
+
+.theme-light .text-zinc-400 {
+  color: #3f3f46 !important; /* zinc-700 */
+}
+
+.theme-light .text-zinc-500 {
+  color: #71717a !important; /* zinc-500 */
+}
+
+.theme-light .text-zinc-600 {
+  color: #3f3f46 !important; /* zinc-700 */
+}
+
+/* Form inputs & selectivity menus */
+.theme-light input,
+.theme-light select,
+.theme-light textarea {
+  background-color: #ffffff !important;
+  border: 1px solid #d4d4d8 !important; /* zinc-300 */
+  color: #18181b !important; /* zinc-900 */
+}
+
+.theme-light select option {
+  background-color: #ffffff !important;
+  color: #18181b !important;
+}
+
+/* Interactive hover properties */
+.theme-light .hover\:bg-zinc-900:hover,
+.theme-light .hover\:bg-zinc-800:hover,
+.theme-light .hover\:bg-white\/5:hover,
+.theme-light .hover\:bg-white\/10:hover,
+.theme-light .hover\:text-white:hover {
+  background-color: #e4e4e7 !important; /* zinc-200 hover bg */
+  color: #18181b !important;
+}
+
+/* Brands & Badges */
+.theme-light .text-emerald-400,
+.theme-light .text-emerald-500 {
+  color: #047857 !important; /* emerald-700 */
+}
+
+.theme-light .text-amber-500,
+.theme-light .text-amber-500\/80 {
+  color: #b45309 !important; /* amber-700 */
+}
+
+.theme-light .text-orange-500 {
+  color: #c2410c !important; /* orange-700 */
+}
+
+.theme-light .text-blue-500 {
+  color: #1d4ed8 !important; /* blue-700 */
+}
+
+.theme-light .text-red-400,
+.theme-light .text-red-500 {
+  color: #b91c1c !important; /* red-700 */
+}
+
+/* Heatmap day cells that are active */
+.theme-light .bg-emerald-500 {
+  background-color: #10b981 !important; /* emerald-500 */
+  color: #000000 !important;
+}
+.theme-light .bg-amber-500 {
+  background-color: #f59e0b !important; /* amber-500 */
+  color: #000000 !important;
+}
+
+/* Standardizing dropdown overlays */
+.theme-light .bg-zinc-950\/60,
+.theme-light .bg-zinc-950\/40,
+.theme-light .bg-black\/60,
+.theme-light .bg-[#0a0a0a]\/80,
+.theme-light .bg-zinc-950\/80 {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(8px);
+}
