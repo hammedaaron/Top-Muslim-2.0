@@ -52,6 +52,12 @@ export interface UserProfile {
     muharram: boolean;
     dhulHijjah: boolean;
   };
+  memoStartPage?: number;
+  memoDailyType?: 'pages' | 'half' | 'lines';
+  memoDailyValue?: number;
+  memoStartDate?: string;
+  memoSelectedSurahNum?: number;
+  memoMemorizedSurahs?: number[];
 }
 
 export interface FastingLog {
