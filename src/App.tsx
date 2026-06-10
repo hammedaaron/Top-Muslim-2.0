@@ -450,9 +450,9 @@ export default function App() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 0.6 }}
                 transition={{ delay: 0.6 }}
-                className="text-xs font-bold uppercase tracking-[0.4em] text-zinc-400"
+                className="text-xs font-bold uppercase tracking-[0.2em] text-zinc-400"
               >
-                Fasting & Prayer Dates
+                Become the Muslim You Aspire to Be
               </motion.p>
             </div>
           </div>
@@ -464,9 +464,8 @@ export default function App() {
             className="space-y-8"
           >
             <p className="text-zinc-400 text-sm leading-relaxed font-medium">
-              Your spiritual companion for the lunar cycle. <br />
-              Track Sunnah fasts, White Days, and sacred months <br />
-              with precision and beauty.
+              Designed for intentional Muslims. <br />
+              Track prayers, Sunnah fasts, Qur'an memorization, zakat, and Hajj savings with precision and beauty.
             </p>
             
             <div className="space-y-4">
@@ -505,22 +504,7 @@ export default function App() {
                 <span className="text-sm uppercase tracking-widest">Continue as Guest</span>
               </button>
 
-              <div className="p-4 bg-zinc-950/80 rounded-2xl border border-white/5 text-left space-y-2">
-                <span className="text-[10px] text-emerald-400 font-bold uppercase tracking-wider flex items-center gap-1.5">
-                  <Info className="w-3 px-0.5 fill-emerald-400/10 text-emerald-400" /> Google Login Support Guide
-                </span>
-                <p className="text-[10px] text-zinc-500 leading-normal">
-                  If the login button seems unresponsive inside the AI Studio preview iframe:
-                </p>
-                <ul className="list-disc pl-4 text-[10px] text-zinc-500 space-y-1">
-                  <li>
-                    <strong>Open Standalone Tab:</strong> Click the open-in-new-tab icon in the preview header to bypass iframe security boundaries.
-                  </li>
-                  <li>
-                    <strong>Firebase Settings:</strong> Enable the <strong>Google Sign-in</strong> provider in your Firebase Authentication console, and add your development URL (<code className="text-emerald-400/80">ais-dev-...run.app</code>) to the <strong>Authorized Domains</strong> list.
-                  </li>
-                </ul>
-              </div>
+
             </div>
           </motion.div>
 

@@ -849,6 +849,30 @@ export const MemorizationTracker: React.FC<MemorizationTrackerProps> = ({ uid })
                       onChange={(e) => updateProfileConfig({ memoStartPage: parseInt(e.target.value) })}
                       className="w-full h-1.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-emerald-500 focus:outline-none"
                     />
+                    
+                    {/* Manual page adjustments with < & > buttons */}
+                    <div className="flex items-center justify-between gap-4 bg-zinc-950/40 p-2 rounded-xl border border-white/5">
+                      <button
+                        type="button"
+                        onClick={() => updateProfileConfig({ memoStartPage: Math.max(1, config.startPage - 1) })}
+                        disabled={config.startPage <= 1}
+                        className="p-1.5 rounded-lg bg-zinc-900 border border-white/10 text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors disabled:opacity-30 disabled:pointer-events-none"
+                      >
+                        <ChevronLeft className="w-4 h-4" />
+                      </button>
+                      <span className="text-[10px] uppercase font-bold tracking-widest text-zinc-500 select-none">
+                        Adjust Page: <span className="text-emerald-400 text-xs font-black">{config.startPage}</span>
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => updateProfileConfig({ memoStartPage: Math.min(604, config.startPage + 1) })}
+                        disabled={config.startPage >= 604}
+                        className="p-1.5 rounded-lg bg-zinc-900 border border-white/10 text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors disabled:opacity-30 disabled:pointer-events-none"
+                      >
+                        <ChevronRight className="w-4 h-4" />
+                      </button>
+                    </div>
+
                     <div className="flex justify-between text-[9px] font-black text-zinc-500 uppercase tracking-widest">
                       <span>Beginner (Page 1)</span>
                       <span>Halfway (Page 302)</span>
